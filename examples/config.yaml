@@ -1,0 +1,28 @@
+# Example configuration for scraping a product listing page
+
+url: "https://example.com/products"
+selectors:
+  title: "h1.product-title"
+  price: "span.product-price"
+  description: "div.product-description"
+  image: "img.product-image::attr(src)"
+  rating: "div.product-rating"
+output: "output/products.json"
+format: "json"
+max_pages: 3
+render_js: true
+
+# Scraper settings
+scraper:
+  timeout: 30
+  max_retries: 3
+  respect_robots_txt: true
+
+# Parser settings
+parser:
+  normalize_whitespace: true
+  extract_metadata: true
+
+# Storage settings
+storage:
+  pretty_json: true

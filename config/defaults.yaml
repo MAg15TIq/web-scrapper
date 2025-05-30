@@ -1,0 +1,47 @@
+# Default configuration for the web scraping system
+
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: null  # Set to a file path to enable file logging
+
+scraper:
+  user_agents:
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15"
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"
+  default_timeout: 30
+  max_retries: 3
+  retry_delay: 2.0
+  respect_robots_txt: true
+  default_headers:
+    Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+    Accept-Language: "en-US,en;q=0.5"
+    Accept-Encoding: "gzip, deflate, br"
+    Connection: "keep-alive"
+    Upgrade-Insecure-Requests: "1"
+    Cache-Control: "max-age=0"
+
+parser:
+  default_parser: "html.parser"  # Options: "html.parser", "lxml", "html5lib"
+  normalize_whitespace: true
+  extract_metadata: true
+
+storage:
+  output_dir: "output"
+  default_format: "json"  # Options: "json", "csv", "excel", "sqlite"
+  pretty_json: true
+  csv_delimiter: ","
+  excel_engine: "openpyxl"
+
+proxy:
+  enabled: false
+  rotation_enabled: true
+  proxy_list_path: null  # Path to a file containing proxies
+  check_interval: 600  # Seconds between proxy health checks
+
+rate_limiting:
+  enabled: true
+  default_rate: 1  # Requests per period
+  default_period: 2.0  # Period in seconds
+  adaptive: true  # Adjust rate based on server responses

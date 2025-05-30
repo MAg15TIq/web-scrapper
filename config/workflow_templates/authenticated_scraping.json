@@ -1,0 +1,135 @@
+{
+    "name": "authenticated_scraping",
+    "description": "Workflow for scraping authenticated pages with anti-detection measures",
+    "version": "1.0",
+    "tasks": [
+        {
+            "type": "GENERATE_FINGERPRINT",
+            "parameters": {
+                "browser_type": "chrome",
+                "os_type": "windows"
+            }
+        },
+        {
+            "type": "AUTHENTICATE",
+            "parameters": {
+                "url": "${login_url}",
+                "username": "${username}",
+                "password": "${password}",
+                "form_selectors": {
+                    "username_field": "${username_field}",
+                    "password_field": "${password_field}",
+                    "submit_button": "${submit_button}"
+                }
+            },
+            "dependencies": ["GENERATE_FINGERPRINT"]
+        },
+        {
+            "type": "FETCH_URL",
+            "parameters": {
+                "url": "${target_url}",
+                "timeout": 30,
+                "retry_count": 3,
+                "use_session": true,
+                "headers": {
+                    "User-Agent": "${user_agent}",
+                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                    "Accept-Language": "en-US,en;q=0.5"
+                }
+            },
+            "dependencies": ["AUTHENTICATE"]
+        },
+        {
+            "type": "RENDER_JS",
+            "parameters": {
+                "wait_for": "${wait_for_selector}",
+                "timeout": 30
+            },
+            "dependencies": ["FETCH_URL"]
+        },
+        {
+            "type": "PARSE_CONTENT",
+            "parameters": {
+                "selectors": "${selectors}",
+                "extract_links": true,
+                "handle_dynamic_content": true
+            },
+            "dependencies": ["RENDER_JS"]
+        },
+        {
+            "type": "CLEAN_DATA",
+            "parameters": {
+                "remove_duplicates": true,
+                "normalize_text": true,
+                "validate_schema": "${schema}"
+            },
+            "dependencies": ["PARSE_CONTENT"]
+        },
+        {
+            "type": "STORE_DATA",
+            "parameters": {
+                "format": "json",
+                "destination": "${output_path}",
+                "compress": true
+            },
+            "dependencies": ["CLEAN_DATA"]
+        }
+    ],
+    "parameters": {
+        "login_url": {
+            "type": "string",
+            "required": true,
+            "description": "URL of the login page"
+        },
+        "target_url": {
+            "type": "string",
+            "required": true,
+            "description": "URL to scrape after authentication"
+        },
+        "username": {
+            "type": "string",
+            "required": true,
+            "description": "Username for authentication"
+        },
+        "password": {
+            "type": "string",
+            "required": true,
+            "description": "Password for authentication"
+        },
+        "username_field": {
+            "type": "string",
+            "required": true,
+            "description": "CSS selector for username input field"
+        },
+        "password_field": {
+            "type": "string",
+            "required": true,
+            "description": "CSS selector for password input field"
+        },
+        "submit_button": {
+            "type": "string",
+            "required": true,
+            "description": "CSS selector for submit button"
+        },
+        "wait_for_selector": {
+            "type": "string",
+            "required": true,
+            "description": "CSS selector to wait for after page load"
+        },
+        "selectors": {
+            "type": "object",
+            "required": true,
+            "description": "CSS selectors for data extraction"
+        },
+        "schema": {
+            "type": "object",
+            "required": true,
+            "description": "JSON schema for data validation"
+        },
+        "output_path": {
+            "type": "string",
+            "required": true,
+            "description": "Path to store the scraped data"
+        }
+    }
+} 

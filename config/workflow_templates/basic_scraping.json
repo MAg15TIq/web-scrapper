@@ -1,0 +1,48 @@
+{
+    "name": "basic_scraping",
+    "description": "Basic workflow for scraping a single page",
+    "version": "1.0",
+    "tasks": [
+        {
+            "type": "FETCH_URL",
+            "parameters": {
+                "url": "${url}",
+                "timeout": 30,
+                "retry_count": 3
+            }
+        },
+        {
+            "type": "PARSE_CONTENT",
+            "parameters": {
+                "selectors": "${selectors}",
+                "extract_links": true
+            },
+            "dependencies": ["FETCH_URL"]
+        },
+        {
+            "type": "STORE_DATA",
+            "parameters": {
+                "format": "json",
+                "destination": "${output_path}"
+            },
+            "dependencies": ["PARSE_CONTENT"]
+        }
+    ],
+    "parameters": {
+        "url": {
+            "type": "string",
+            "required": true,
+            "description": "URL to scrape"
+        },
+        "selectors": {
+            "type": "object",
+            "required": true,
+            "description": "CSS selectors for data extraction"
+        },
+        "output_path": {
+            "type": "string",
+            "required": true,
+            "description": "Path to store the scraped data"
+        }
+    }
+} 
