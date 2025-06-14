@@ -1,0 +1,43 @@
+{
+  "cf6786fd-42ff-4e6b-84fb-ad1f3acd7096": {
+    "id": "cf6786fd-42ff-4e6b-84fb-ad1f3acd7096",
+    "user_id": "06a63e75-f0d8-4031-9a81-29afaa204e11",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMDZhNjNlNzUtZjBkOC00MDMxLTlhODEtMjlhZmFhMjA0ZTExIiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlzX2FkbWluIjp0cnVlLCJpYXQiOjE3NDk4NjY2ODEsImV4cCI6MTc0OTk1MzA4MX0.nHnOMRclQMKdrDTr3LW5BlPQqQSAaeNNh-Jc6MtTcX8",
+    "created_at": "2025-06-14 02:04:41.026766",
+    "expires_at": "2025-06-15 02:04:41.026766",
+    "last_accessed": "2025-06-14 02:04:41.026766",
+    "status": "active",
+    "client_info": {},
+    "permissions": [
+      "*"
+    ]
+  },
+  "ce75db4a-6d4e-492a-9d76-0d4e2c997b5b": {
+    "id": "ce75db4a-6d4e-492a-9d76-0d4e2c997b5b",
+    "user_id": "06a63e75-f0d8-4031-9a81-29afaa204e11",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMDZhNjNlNzUtZjBkOC00MDMxLTlhODEtMjlhZmFhMjA0ZTExIiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlzX2FkbWluIjp0cnVlLCJpYXQiOjE3NDk4NjY3MDQsImV4cCI6MTc0OTk1MzEwNH0.uqSmlNoY8oDRJGzRiq9nFiVz7d5M7Fpz7QJzrm-fju4",
+    "created_at": "2025-06-14 02:05:04.295398",
+    "expires_at": "2025-06-15 02:05:04.295398",
+    "last_accessed": "2025-06-14 02:05:04.295398",
+    "status": "active",
+    "client_info": {},
+    "permissions": [
+      "*"
+    ]
+  },
+  "0bc7378a-4d28-4b40-998d-64c6f738acec": {
+    "id": "0bc7378a-4d28-4b40-998d-64c6f738acec",
+    "user_id": "06a63e75-f0d8-4031-9a81-29afaa204e11",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMDZhNjNlNzUtZjBkOC00MDMxLTlhODEtMjlhZmFhMjA0ZTExIiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlzX2FkbWluIjp0cnVlLCJpYXQiOjE3NDk4NjY3MDUsImV4cCI6MTc0OTk1MzEwNX0.W41prRG0CryLKXxGFbs29OdHa5otR3U2ARV6wcVLIog",
+    "created_at": "2025-06-14 02:05:05.000060",
+    "expires_at": "2025-06-15 02:05:05.000060",
+    "last_accessed": "2025-06-14 02:05:05.000060",
+    "status": "active",
+    "client_info": {
+      "client": "test_script"
+    },
+    "permissions": [
+      "*"
+    ]
+  }
+}

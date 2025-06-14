@@ -1,0 +1,188 @@
+agent_system:
+  adaptive_rate_limiting: true
+  agent_idle_timeout: 600
+  default_timeout: 300
+  enable_performance_optimization: true
+  enable_workflow_persistence: true
+  intelligent_retry: true
+  max_agents_per_type: 5
+  max_concurrent_workflows: 10
+  max_retry_attempts: 3
+  min_agents_per_type: 1
+  workflow_checkpoint_interval: 30
+cli:
+  agents:
+    parser:
+      agent_type: parser
+      config:
+        normalize_data: true
+    scraper:
+      agent_type: scraper
+      config:
+        retries: 3
+        timeout: 30
+    storage:
+      agent_type: storage
+      config:
+        default_format: json
+  default_profile: default
+  profiles:
+    default:
+      default_agents:
+      - scraper
+      - parser
+      - storage
+      default_output_format: json
+      description: Default unified profile
+      name: default
+      theme: modern
+config_source: !!python/object/apply:config.unified_config.ConfigSource
+- default
+database:
+  echo: false
+  max_overflow: 10
+  pool_recycle: 3600
+  pool_size: 5
+  pool_timeout: 30
+  url: sqlite:///./webscraper.db
+global_settings:
+  cache_enabled: true
+  log_level: INFO
+  logs_dir: logs
+  max_workers: 5
+  output_dir: output
+langchain:
+  agent_timeout: 300
+  anthropic_api_key: null
+  anthropic_model: claude-3-sonnet-20240229
+  enable_memory: true
+  langchain_endpoint: null
+  langchain_project: web-scraping-agents
+  langchain_tracing: false
+  max_iterations: 10
+  memory_window_size: 10
+  openai_api_key: null
+  openai_max_tokens: 2000
+  openai_model: gpt-4
+  openai_temperature: 0.1
+monitoring:
+  collect_agent_metrics: true
+  collect_workflow_metrics: true
+  log_file: null
+  log_format: json
+  log_level: INFO
+  metrics_retention_days: 30
+  prometheus_enabled: true
+  prometheus_host: 0.0.0.0
+  prometheus_port: 8000
+redis:
+  redis_db: 0
+  redis_host: localhost
+  redis_max_connections: 20
+  redis_password: null
+  redis_port: 6379
+  redis_retry_on_timeout: true
+  redis_socket_timeout: 30
+  redis_ssl: false
+security:
+  access_token_expire_minutes: 30
+  algorithm: HS256
+  lockout_duration_minutes: 15
+  max_login_attempts: 5
+  password_min_length: 8
+  refresh_token_expire_days: 7
+  require_email_verification: false
+  secret_key: your-secret-key-change-in-production
+version: 2.0.0
+web:
+  agent_timeout: 300
+  allowed_extensions:
+  - .json
+  - .csv
+  - .xlsx
+  - .pdf
+  - .txt
+  - .html
+  api_prefix: /api/v1
+  cors:
+    allow_credentials: true
+    allow_headers:
+    - '*'
+    allow_methods:
+    - '*'
+    allow_origins:
+    - '*'
+    expose_headers: []
+    max_age: 600
+  database:
+    echo: false
+    max_overflow: 10
+    pool_recycle: 3600
+    pool_size: 5
+    pool_timeout: 30
+    url: sqlite:///./webscraper.db
+  debug: false
+  description: Advanced web scraping with AI agents
+  docs_url: /docs
+  enable_auth: true
+  enable_file_uploads: true
+  enable_monitoring: true
+  enable_rate_limiting: true
+  enable_websockets: true
+  host: 0.0.0.0
+  job_cleanup_interval: 3600
+  log_file: null
+  log_format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  log_level: INFO
+  max_concurrent_jobs: 10
+  max_upload_size: 10485760
+  monitoring:
+    alert_thresholds:
+      cpu_usage: 80.0
+      disk_usage: 90.0
+      error_rate: 5.0
+      memory_usage: 85.0
+    enabled: true
+    health_endpoint: /health
+    metrics_endpoint: /metrics
+    retention_days: 30
+    update_interval: 5
+  openapi_url: /openapi.json
+  port: 8000
+  rate_limit:
+    burst_size: 10
+    enabled: true
+    requests_per_hour: 1000
+    requests_per_minute: 60
+    storage_url: memory://
+  redis:
+    max_connections: 10
+    password: null
+    retry_on_timeout: true
+    socket_connect_timeout: 5
+    socket_timeout: 5
+    url: redis://localhost:6379/0
+  redoc_url: /redoc
+  reload: false
+  security:
+    access_token_expire_minutes: 30
+    algorithm: HS256
+    lockout_duration_minutes: 15
+    max_login_attempts: 5
+    password_min_length: 8
+    refresh_token_expire_days: 7
+    require_email_verification: false
+    secret_key: your-secret-key-change-in-production
+  static_dir: web/frontend/dist
+  templates_dir: web/templates
+  title: Unified Web Scraper System
+  upload_dir: uploads
+  version: 2.0.0
+  websocket:
+    close_timeout: 10
+    enabled: true
+    max_connections: 100
+    max_message_size: 1048576
+    ping_interval: 20
+    ping_timeout: 10
+  workers: 1

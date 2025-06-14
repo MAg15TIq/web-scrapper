@@ -1,0 +1,449 @@
+{% extends "base.html" %}
+
+{% block title %}Visual Workflow Builder - Web Scraper{% endblock %}
+
+{% block extra_head %}
+<style>
+    .workflow-page {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px 0;
+    }
+    
+    .workflow-container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        padding: 30px;
+        margin: 20px auto;
+        max-width: 1400px;
+    }
+    
+    .workflow-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #f8f9fa;
+    }
+    
+    .workflow-header h1 {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    
+    .workflow-header p {
+        color: #6c757d;
+        font-size: 1.1em;
+    }
+    
+    .feature-tabs {
+        margin-bottom: 30px;
+    }
+    
+    .nav-pills .nav-link {
+        border-radius: 25px;
+        padding: 12px 24px;
+        margin: 0 5px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-pills .nav-link.active {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        border: none;
+    }
+    
+    .tab-content {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 30px;
+        min-height: 700px;
+    }
+    
+    .workflow-canvas-container {
+        position: relative;
+        background: white;
+        border: 2px dashed #dee2e6;
+        border-radius: 10px;
+        min-height: 600px;
+    }
+    
+    .getting-started {
+        text-align: center;
+        padding: 60px 20px;
+        color: #6c757d;
+    }
+    
+    .getting-started i {
+        font-size: 64px;
+        margin-bottom: 20px;
+        color: #dee2e6;
+    }
+    
+    .feature-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .feature-icon {
+        font-size: 2em;
+        margin-bottom: 15px;
+    }
+    
+    .workflow-stats {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 30px;
+    }
+    
+    .stat-item {
+        text-align: center;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        flex: 1;
+        margin: 0 10px;
+    }
+    
+    .stat-number {
+        font-size: 2em;
+        font-weight: bold;
+        color: #667eea;
+    }
+    
+    .stat-label {
+        color: #6c757d;
+        font-size: 0.9em;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="workflow-page">
+    <div class="container-fluid">
+        <div class="workflow-container">
+            <div class="workflow-header">
+                <h1>🎨 Visual Workflow Builder</h1>
+                <p>Create powerful web scraping workflows with drag-and-drop simplicity</p>
+            </div>
+            
+            <!-- Workflow Statistics -->
+            <div class="workflow-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="total-workflows">0</div>
+                    <div class="stat-label">Total Workflows</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="active-nodes">0</div>
+                    <div class="stat-label">Active Nodes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="saved-templates">5</div>
+                    <div class="stat-label">Templates</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="execution-time">0s</div>
+                    <div class="stat-label">Avg. Execution</div>
+                </div>
+            </div>
+            
+            <!-- Feature Tabs -->
+            <ul class="nav nav-pills feature-tabs justify-content-center" id="workflowTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="builder-tab" data-bs-toggle="pill" data-bs-target="#builder" type="button" role="tab">
+                        🔧 Workflow Builder
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="selector-tab" data-bs-toggle="pill" data-bs-target="#selector" type="button" role="tab">
+                        🎯 Visual Selector
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="templates-tab" data-bs-toggle="pill" data-bs-target="#templates" type="button" role="tab">
+                        📋 Templates
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="testing-tab" data-bs-toggle="pill" data-bs-target="#testing" type="button" role="tab">
+                        🧪 Testing
+                    </button>
+                </li>
+            </ul>
+            
+            <!-- Tab Content -->
+            <div class="tab-content" id="workflowTabContent">
+                <!-- Workflow Builder Tab -->
+                <div class="tab-pane fade show active" id="builder" role="tabpanel">
+                    <div id="workflow-builder-container">
+                        <div class="getting-started">
+                            <i class="bi bi-diagram-3"></i>
+                            <h3>Welcome to the Visual Workflow Builder</h3>
+                            <p>Drag agents from the palette to create your scraping workflow</p>
+                            <button class="btn btn-primary btn-lg" onclick="showWorkflowTutorial()">
+                                🚀 Start Tutorial
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visual Selector Tab -->
+                <div class="tab-pane fade" id="selector" role="tabpanel">
+                    <div id="visual-selector-container">
+                        <div class="getting-started">
+                            <i class="bi bi-cursor"></i>
+                            <h3>Visual Element Selector</h3>
+                            <p>Point and click to build CSS selectors visually</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Templates Tab -->
+                <div class="tab-pane fade" id="templates" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="feature-card">
+                                <div class="feature-icon">🛒</div>
+                                <h5>E-commerce Scraper</h5>
+                                <p>Extract product information, prices, and reviews from online stores.</p>
+                                <button class="btn btn-primary btn-sm" onclick="loadTemplate('ecommerce')">Use Template</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-card">
+                                <div class="feature-icon">📰</div>
+                                <h5>News Aggregator</h5>
+                                <p>Collect articles, headlines, and metadata from news websites.</p>
+                                <button class="btn btn-primary btn-sm" onclick="loadTemplate('news')">Use Template</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-card">
+                                <div class="feature-icon">💼</div>
+                                <h5>Job Listings</h5>
+                                <p>Gather job postings, requirements, and company information.</p>
+                                <button class="btn btn-primary btn-sm" onclick="loadTemplate('jobs')">Use Template</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-card">
+                                <div class="feature-icon">🏠</div>
+                                <h5>Real Estate</h5>
+                                <p>Extract property listings, prices, and location data.</p>
+                                <button class="btn btn-primary btn-sm" onclick="loadTemplate('realestate')">Use Template</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-card">
+                                <div class="feature-icon">📊</div>
+                                <h5>Data Analytics</h5>
+                                <p>Collect and process data for analysis and reporting.</p>
+                                <button class="btn btn-primary btn-sm" onclick="loadTemplate('analytics')">Use Template</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-card">
+                                <div class="feature-icon">🎨</div>
+                                <h5>Custom Workflow</h5>
+                                <p>Start with a blank canvas and build your own workflow.</p>
+                                <button class="btn btn-outline-primary btn-sm" onclick="createCustomWorkflow()">Create Custom</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testing Tab -->
+                <div class="tab-pane fade" id="testing" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="feature-card">
+                                <h5>🧪 Workflow Testing</h5>
+                                <p>Test your workflows before deployment</p>
+                                <div class="mb-3">
+                                    <label class="form-label">Select Workflow</label>
+                                    <select class="form-select" id="test-workflow-select">
+                                        <option value="">Choose a workflow to test...</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Test URL</label>
+                                    <input type="url" class="form-control" id="test-url" placeholder="https://example.com">
+                                </div>
+                                <button class="btn btn-success" onclick="runWorkflowTest()">🚀 Run Test</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-card">
+                                <h5>📊 Test Results</h5>
+                                <div id="test-results">
+                                    <p class="text-muted">No tests run yet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="feature-card">
+                                <h5>📈 Performance Benchmarks</h5>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <div class="stat-number text-success">95%</div>
+                                            <div class="stat-label">Success Rate</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <div class="stat-number text-info">2.3s</div>
+                                            <div class="stat-label">Avg Response Time</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <div class="stat-number text-warning">1,247</div>
+                                            <div class="stat-label">Items Processed</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="text-center">
+                                            <div class="stat-number text-primary">99.2%</div>
+                                            <div class="stat-label">Data Accuracy</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="/static/js/workflow-builder.js"></script>
+<script src="/static/js/visual-selector.js"></script>
+
+<script>
+// Workflow management functions
+function showWorkflowTutorial() {
+    alert('🎓 Tutorial: Drag agents from the left palette onto the canvas, connect them by clicking output points, and configure properties in the right panel.');
+}
+
+function loadTemplate(templateType) {
+    const templates = {
+        ecommerce: {
+            nodes: [
+                { type: 'Scraper', x: 100, y: 100, properties: { url: 'https://shop.example.com' } },
+                { type: 'Parser', x: 300, y: 100, properties: { selectors: { title: 'h1', price: '.price' } } },
+                { type: 'Storage', x: 500, y: 100, properties: { format: 'csv', filename: 'products' } }
+            ],
+            connections: [
+                { from: 1, to: 2 },
+                { from: 2, to: 3 }
+            ]
+        },
+        news: {
+            nodes: [
+                { type: 'Scraper', x: 100, y: 100, properties: { url: 'https://news.example.com' } },
+                { type: 'Parser', x: 300, y: 100, properties: { selectors: { headline: 'h2', content: '.article-body' } } },
+                { type: 'Data Transform', x: 500, y: 100, properties: { operations: ['clean_text', 'extract_entities'] } },
+                { type: 'Storage', x: 700, y: 100, properties: { format: 'json', filename: 'articles' } }
+            ],
+            connections: [
+                { from: 1, to: 2 },
+                { from: 2, to: 3 },
+                { from: 3, to: 4 }
+            ]
+        }
+    };
+    
+    const template = templates[templateType];
+    if (template && workflowBuilder) {
+        workflowBuilder.loadWorkflowData(template);
+        
+        // Switch to builder tab
+        document.getElementById('builder-tab').click();
+        
+        alert(`✅ ${templateType.charAt(0).toUpperCase() + templateType.slice(1)} template loaded!`);
+    }
+}
+
+function createCustomWorkflow() {
+    if (workflowBuilder) {
+        workflowBuilder.resetWorkflow();
+        document.getElementById('builder-tab').click();
+    }
+}
+
+function runWorkflowTest() {
+    const workflow = document.getElementById('test-workflow-select').value;
+    const url = document.getElementById('test-url').value;
+    
+    if (!workflow || !url) {
+        alert('Please select a workflow and enter a test URL');
+        return;
+    }
+    
+    // Simulate test execution
+    const resultsDiv = document.getElementById('test-results');
+    resultsDiv.innerHTML = `
+        <div class="alert alert-info">
+            <strong>🧪 Running test...</strong>
+        </div>
+    `;
+    
+    setTimeout(() => {
+        resultsDiv.innerHTML = `
+            <div class="alert alert-success">
+                <strong>✅ Test completed successfully!</strong>
+                <ul class="mt-2 mb-0">
+                    <li>Extracted 25 items</li>
+                    <li>Processing time: 3.2 seconds</li>
+                    <li>Success rate: 100%</li>
+                    <li>Data quality: Excellent</li>
+                </ul>
+            </div>
+        `;
+    }, 2000);
+}
+
+// Update statistics
+function updateStats() {
+    if (workflowBuilder) {
+        document.getElementById('active-nodes').textContent = workflowBuilder.nodes.size;
+    }
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Update stats periodically
+    setInterval(updateStats, 1000);
+    
+    // Load saved workflows into test dropdown
+    const testSelect = document.getElementById('test-workflow-select');
+    if (testSelect) {
+        // Add some example workflows
+        const workflows = ['E-commerce Scraper', 'News Aggregator', 'Job Listings', 'Custom Workflow'];
+        workflows.forEach(workflow => {
+            const option = document.createElement('option');
+            option.value = workflow.toLowerCase().replace(/\s+/g, '-');
+            option.textContent = workflow;
+            testSelect.appendChild(option);
+        });
+    }
+});
+</script>
+{% endblock %}

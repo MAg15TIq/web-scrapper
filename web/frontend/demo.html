@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Scraper Pro - Frontend Demo</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        .metric-card {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-label {
+            color: #6c757d;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 1rem 0;
+        }
+        
+        .job-status {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+        }
+        
+        .job-status.pending {
+            background-color: #ffc107;
+            color: #000;
+        }
+        
+        .job-status.running {
+            background-color: #0dcaf0;
+            color: #000;
+        }
+        
+        .job-status.completed {
+            background-color: #198754;
+            color: white;
+        }
+        
+        .job-status.failed {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-robot"></i>
+                Web Scraper Pro
+            </a>
+            
+            <div class="navbar-nav">
+                <a class="nav-link active" href="#dashboard">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </a>
+                <a class="nav-link" href="#jobs">
+                    <i class="bi bi-list-task"></i> Jobs
+                </a>
+                <a class="nav-link" href="#agents">
+                    <i class="bi bi-cpu"></i> Agents
+                </a>
+                <a class="nav-link" href="#monitoring">
+                    <i class="bi bi-graph-up"></i> Monitoring
+                </a>
+                <a class="nav-link" href="#data">
+                    <i class="bi bi-database"></i> Data
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-4">
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Web Scraper Dashboard</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <button type="button" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> New Job
+                </button>
+            </div>
+        </div>
+
+        <!-- System Overview Cards -->
+        <div class="row mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-start border-primary border-4">
+                    <div class="card-body metric-card">
+                        <div class="metric-value text-primary">24</div>
+                        <div class="metric-label">Total Jobs</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-start border-success border-4">
+                    <div class="card-body metric-card">
+                        <div class="metric-value text-success">3</div>
+                        <div class="metric-label">Active Jobs</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-start border-warning border-4">
+                    <div class="card-body metric-card">
+                        <div class="metric-value text-warning">92%</div>
+                        <div class="metric-label">Success Rate</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-start border-info border-4">
+                    <div class="card-body metric-card">
+                        <div class="metric-value text-info">15,847</div>
+                        <div class="metric-label">Records Collected</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row mb-4">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-graph-up"></i> Job Activity (Last 24 Hours)
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="jobActivityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-pie-chart"></i> Job Status Distribution
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="jobStatusChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Jobs Table -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-clock-history"></i> Recent Jobs
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Job Name</th>
+                                        <th>Status</th>
+                                        <th>Progress</th>
+                                        <th>Created</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>E-commerce Product Scraping</strong>
+                                            <br>
+                                            <small class="text-muted">web_scraping</small>
+                                        </td>
+                                        <td><span class="job-status completed">COMPLETED</span></td>
+                                        <td>
+                                            <div class="progress" style="height: 20px;">
+                                                <div class="progress-bar bg-success" style="width: 100%">100%</div>
+                                            </div>
+                                        </td>
+                                        <td>2023-12-01 10:30 AM</td>
+                                        <td>
+                                            <button class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>News Articles Collection</strong>
+                                            <br>
+                                            <small class="text-muted">web_scraping</small>
+                                        </td>
+                                        <td><span class="job-status running">RUNNING</span></td>
+                                        <td>
+                                            <div class="progress" style="height: 20px;">
+                                                <div class="progress-bar bg-primary" style="width: 65%">65%</div>
+                                            </div>
+                                        </td>
+                                        <td>2023-12-01 11:15 AM</td>
+                                        <td>
+                                            <button class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn btn-outline-danger btn-sm">
+                                                <i class="bi bi-stop"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Social Media Posts</strong>
+                                            <br>
+                                            <small class="text-muted">api_scraping</small>
+                                        </td>
+                                        <td><span class="job-status pending">PENDING</span></td>
+                                        <td>
+                                            <div class="progress" style="height: 20px;">
+                                                <div class="progress-bar bg-warning" style="width: 0%">0%</div>
+                                            </div>
+                                        </td>
+                                        <td>2023-12-01 12:00 PM</td>
+                                        <td>
+                                            <button class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Showcase -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-star"></i> Frontend Features Implemented
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>✨ User Interface</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="bi bi-check-circle text-success"></i> Responsive Bootstrap 5 design</li>
+                                    <li><i class="bi bi-check-circle text-success"></i> Mobile-friendly navigation</li>
+                                    <li><i class="bi bi-check-circle text-success"></i> Interactive dashboards</li>
+                                    <li><i class="bi bi-check-circle text-success"></i> Real-time progress tracking</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>🚀 Functionality</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="bi bi-check-circle text-success"></i> Job creation wizard</li>
+                                    <li><i class="bi bi-check-circle text-success"></i> Agent management</li>
+                                    <li><i class="bi bi-check-circle text-success"></i> System monitoring</li>
+                                    <li><i class="bi bi-check-circle text-success"></i> Data export tools</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Job Activity Chart
+            const jobActivityCtx = document.getElementById('jobActivityChart').getContext('2d');
+            new Chart(jobActivityCtx, {
+                type: 'line',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'],
+                    datasets: [{
+                        label: 'Jobs Created',
+                        data: [2, 1, 4, 3, 6, 4, 2],
+                        borderColor: '#0d6efd',
+                        backgroundColor: '#0d6efd20',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            // Job Status Chart
+            const jobStatusCtx = document.getElementById('jobStatusChart').getContext('2d');
+            new Chart(jobStatusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Completed', 'Running', 'Failed', 'Pending'],
+                    datasets: [{
+                        data: [18, 3, 1, 2],
+                        backgroundColor: ['#198754', '#0dcaf0', '#dc3545', '#ffc107']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

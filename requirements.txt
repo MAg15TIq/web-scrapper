@@ -1,5 +1,23 @@
 # =============================================================================
-# MULTI-AGENT WEB SCRAPING SYSTEM - DEPENDENCIES
+# UNIFIED MULTI-AGENT WEB SCRAPING SYSTEM - COMPREHENSIVE DEPENDENCIES
+# =============================================================================
+#
+# This file contains all dependencies for the enhanced web scraping system
+# including AI-powered agents, unified CLI interfaces, production web interface,
+# enterprise security features, advanced data processing, and developer tools.
+#
+# System Features:
+# - 🤖 30+ Specialized AI Agents (Intelligence, Security, Data Processing, Enterprise)
+# - 🖥️ Unified CLI Interface (Combines Modern, Classic, Enhanced, Intelligent)
+# - 🌐 Production Web Interface with Authentication & Real-time Monitoring
+# - 🛡️ Enterprise Security & Compliance (GDPR, Anti-detection, Encryption)
+# - 📊 Advanced Data Processing (NLP, Computer Vision, Data Enrichment)
+# - 🔧 Developer Experience Tools (Visual Workflow Builder, Testing Framework)
+# - 🏗️ Unified Integration System (Config, Auth, Data, Events)
+# - 🚀 Phase 5 Advanced Data Processing (Enhanced NLP, Computer Vision, Geocoding)
+# - 🔒 Phase 4 Security & Compliance (ML Anti-detection, GDPR, Audit Logging)
+# - 🌐 Unified Web Interface with Automatic Backend Startup
+# - 📱 Real-time WebSocket Integration and Live Monitoring
 # =============================================================================
 
 # =============================================================================
@@ -54,12 +72,16 @@ aiofiles>=23.2.1
 # AUTHENTICATION & SECURITY
 # =============================================================================
 
-# JWT and authentication
+# JWT and authentication (Enhanced for production web interface)
 python-jose[cryptography]>=3.3.0
 passlib[bcrypt]>=1.7.4
 cryptography>=41.0.0
 oauthlib>=3.2.2
 pyjwt>=2.8.0
+
+# Additional security dependencies for enhanced web interface
+python-multipart>=0.0.6  # For form data handling in authentication
+email-validator>=2.1.0   # For email validation in user registration
 
 # =============================================================================
 # AI & LANGUAGE MODELS
@@ -199,6 +221,30 @@ kombu>=5.3.0
 redis>=5.0.0
 
 # =============================================================================
+# ENTERPRISE & DISTRIBUTED COMPUTING
+# =============================================================================
+
+# Distributed Redis
+redis-py-cluster>=2.1.3
+
+# Service discovery and configuration
+consul-python>=1.1.0
+etcd3>=0.12.0
+
+# Container orchestration
+kubernetes>=28.1.0
+docker>=6.1.3
+
+# Load balancing and clustering
+haproxy-stats>=2.0.0
+
+# Distributed coordination
+zookeeper>=0.1.0
+
+# Enterprise monitoring
+statsd>=4.0.1
+
+# =============================================================================
 # TESTING & DEVELOPMENT
 # =============================================================================
 
@@ -219,6 +265,169 @@ pre-commit>=3.6.0
 # Development utilities
 watchdog>=3.0.0
 ipython>=8.17.0
+
+# =============================================================================
+# PHASE 6: DEVELOPER EXPERIENCE & USABILITY
+# =============================================================================
+
+# Visual Workflow Builder
+fabric>=3.2.2
+graphviz>=0.20.1
+networkx>=3.2.1
+
+# Plugin System
+pluggy>=1.3.0
+importlib-metadata>=6.8.0
+stevedore>=5.1.0
+
+# Advanced Testing Framework
+pytest-html>=4.1.1
+pytest-benchmark>=4.0.0
+pytest-mock>=3.12.0
+pytest-timeout>=2.2.0
+pytest-rerunfailures>=12.1.2
+locust>=2.17.0
+
+# Mock Server
+responses>=0.24.1
+httpretty>=1.1.4
+wiremock>=2.6.0
+
+# Visual Components
+pillow>=10.1.0
+opencv-python>=4.8.1.78
+selenium-wire>=5.1.0
+
+# Workflow Serialization
+jsonschema>=4.20.0
+pydantic-yaml>=1.2.0
+
+# =============================================================================
+# UNIFIED SYSTEM INTEGRATION (IMPLEMENTED)
+# =============================================================================
+
+# Event-driven architecture
+asyncio-mqtt>=0.16.1
+pydantic-settings>=2.1.0
+
+# Configuration management
+dynaconf>=3.2.4
+python-decouple>=3.8
+pyyaml>=6.0.1
+
+# Session management
+itsdangerous>=2.1.2
+cachetools>=5.3.2
+
+# Unified CLI Dependencies
+rich>=13.7.0
+rich-click>=1.7.0
+textual>=0.45.0
+typer>=0.9.0
+click>=8.1.7
+
+# Real-time WebSocket Integration
+websockets>=12.0
+python-socketio>=5.10.0
+socketio>=5.10.0
+
+# Unified Web Interface
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+jinja2>=3.1.2
+starlette>=0.27.0
+
+# =============================================================================
+# PHASE 5: ADVANCED DATA PROCESSING (IMPLEMENTED)
+# =============================================================================
+
+# Enhanced NLP Processing
+spacy>=3.7.0
+transformers>=4.35.0
+sentence-transformers>=2.2.2
+textblob>=0.17.1
+langdetect>=1.0.9
+googletrans>=4.0.0
+polyglot>=16.7.4
+
+# Advanced Computer Vision
+easyocr>=1.7.0
+paddleocr>=2.7.0
+torch>=2.1.0
+torchvision>=0.16.0
+ultralytics>=8.0.0
+opencv-contrib-python>=4.8.1
+
+# Data Enrichment & Geocoding
+geoip2>=4.7.0
+phonenumbers>=8.13.0
+email-validator>=2.1.0
+validators>=0.22.0
+geopy>=2.4.0
+pycountry>=22.3.13
+
+# Enhanced Image Processing
+scikit-image>=0.22.0
+imageio>=2.31.0
+opencv-contrib-python>=4.8.1
+pytesseract>=0.3.10
+easyocr>=1.7.0
+
+# Text Analysis & Processing
+fuzzywuzzy>=0.18.0
+python-levenshtein>=0.23.0
+readability>=0.3.1
+textstat>=0.7.3
+
+# =============================================================================
+# ENTERPRISE SECURITY & COMPLIANCE
+# =============================================================================
+
+# Advanced Anti-detection
+selenium-stealth>=1.0.6
+undetected-chromedriver>=3.5.4
+fake-useragent>=1.4.0
+
+# ML-based Fingerprinting
+scikit-learn>=1.3.0
+joblib>=1.3.0
+
+# Encryption & Security
+cryptography>=41.0.0
+bcrypt>=4.1.0
+argon2-cffi>=23.1.0
+
+# GDPR Compliance
+presidio-analyzer>=2.2.33
+presidio-anonymizer>=2.2.33
+
+# Audit Logging
+structlog>=23.2.0
+python-json-logger>=2.0.7
+
+# =============================================================================
+# INTELLIGENT CLI ENHANCEMENTS
+# =============================================================================
+
+# Modern CLI Framework
+rich>=13.7.0
+rich-click>=1.7.0
+textual>=0.45.0
+typer>=0.9.0
+
+# Interactive Components
+questionary>=2.0.0
+prompt-toolkit>=3.0.41
+click-completion>=0.5.2
+
+# CLI Animations & Visuals
+alive-progress>=3.1.5
+pyfiglet>=0.8.post1
+colorama>=0.4.6
+
+# Natural Language Processing for CLI
+fuzzywuzzy>=0.18.0
+python-levenshtein>=0.23.0
 
 # =============================================================================
 # SCIENTIFIC & MACHINE LEARNING (OPTIONAL)
@@ -265,14 +474,230 @@ pywin32>=306; sys_platform == "win32"
 # geckodriver-autoinstaller>=0.1.0
 
 # =============================================================================
-# DEVELOPMENT NOTES
+# REAL-TIME MONITORING & STREAMING
 # =============================================================================
 
-# After installation, run these commands:
-# python -m spacy download en_core_web_sm
-# playwright install
+# WebSocket support
+websockets>=12.0
+python-socketio>=5.10.0
+socketio>=5.10.0
+
+# Real-time data streaming
+redis-streams>=0.7.0
+kafka-python>=2.0.2
+
+# Server-Sent Events
+sse-starlette>=1.8.2
+
+# =============================================================================
+# ENTERPRISE SCALABILITY
+# =============================================================================
+
+# Distributed computing
+celery>=5.3.0
+redis>=5.0.0
+kombu>=5.3.0
+
+# Load balancing
+haproxy-stats>=2.0.0
+
+# Service discovery
+consul-python>=1.1.0
+etcd3>=0.12.0
+
+# Container orchestration
+kubernetes>=28.1.0
+docker>=6.1.3
+
+# Distributed coordination
+zookeeper>=0.1.0
+
+# =============================================================================
+# ADDITIONAL UTILITIES
+# =============================================================================
+
+# File format support
+openpyxl>=3.1.2
+xlsxwriter>=3.1.9
+python-docx>=0.8.11
+python-pptx>=0.6.23
+
+# Date/time utilities
+python-dateutil>=2.8.2
+pytz>=2023.3
+croniter>=1.4.1
+
+# System utilities
+psutil>=5.9.6
+watchdog>=3.0.0
+
+# Development tools
+ipython>=8.17.0
+jupyter>=1.0.0
+
+# =============================================================================
+# DEVELOPMENT & INSTALLATION NOTES
+# =============================================================================
+
+# REQUIRED POST-INSTALLATION COMMANDS:
+# =====================================
 #
-# For Tesseract OCR, install system package:
-# Ubuntu/Debian: sudo apt-get install tesseract-ocr
-# macOS: brew install tesseract
-# Windows: Download from https://github.com/UB-Mannheim/tesseract/wiki
+# 1. Install language models:
+#    python -m spacy download en_core_web_sm
+#    python -m spacy download en_core_web_lg  # For advanced NLP
+#
+# 2. Install browser automation:
+#    python -m playwright install
+#    python -m playwright install-deps  # System dependencies
+#
+# 3. Download ML models (optional):
+#    python -c "import transformers; transformers.pipeline('sentiment-analysis')"
+#
+# SYSTEM DEPENDENCIES:
+# ===================
+#
+# For Tesseract OCR:
+# - Ubuntu/Debian: sudo apt-get install tesseract-ocr tesseract-ocr-eng
+# - macOS: brew install tesseract
+# - Windows: Download from https://github.com/UB-Mannheim/tesseract/wiki
+#
+# For Computer Vision (OpenCV):
+# - Ubuntu/Debian: sudo apt-get install libgl1-mesa-glx libglib2.0-0
+# - macOS: brew install opencv
+# - Windows: Usually works out of the box
+#
+# For Audio Processing (optional):
+# - Ubuntu/Debian: sudo apt-get install ffmpeg
+# - macOS: brew install ffmpeg
+# - Windows: Download from https://ffmpeg.org/
+#
+# OPTIONAL CLOUD DEPENDENCIES:
+# ============================
+# Uncomment these lines if you need cloud storage integration:
+# boto3>=1.34.0  # AWS S3
+# google-cloud-storage>=2.10.0  # Google Cloud
+# azure-storage-blob>=12.19.0  # Azure Blob
+#
+# PERFORMANCE OPTIMIZATION:
+# ========================
+# For production deployments, consider installing:
+# - uvloop>=0.19.0  # Faster event loop (Unix only)
+# - orjson>=3.9.0  # Faster JSON parsing
+# - cchardet>=2.1.7  # Faster character encoding detection
+#
+# SECURITY HARDENING:
+# ==================
+# For enhanced security in production:
+# - python-jose[cryptography]>=3.3.0  # JWT with cryptography
+# - passlib[argon2]>=1.7.4  # Secure password hashing
+# - cryptography>=41.0.0  # Encryption utilities
+
+# =============================================================================
+# LATEST ENHANCEMENTS (2024) - UNIFIED SYSTEM COMPLETE
+# =============================================================================
+
+# Unified CLI System (All 4 CLIs Combined)
+rich>=13.7.0
+rich-click>=1.7.0
+textual>=0.45.0
+typer>=0.9.0
+questionary>=2.0.0
+prompt-toolkit>=3.0.41
+
+# Unified Web Interface with Real-time Updates
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+websockets>=12.0
+python-socketio>=5.10.0
+sse-starlette>=1.8.2
+
+# Unified Integration System
+pydantic-settings>=2.1.0
+dynaconf>=3.2.4
+itsdangerous>=2.1.2
+cachetools>=5.3.2
+
+# Phase 5 Advanced Data Processing
+spacy>=3.7.0
+transformers>=4.35.0
+sentence-transformers>=2.2.2
+easyocr>=1.7.0
+paddleocr>=2.7.0
+geoip2>=4.7.0
+validators>=0.22.0
+
+# Phase 4 Security & Compliance
+presidio-analyzer>=2.2.33
+presidio-anonymizer>=2.2.33
+scikit-learn>=1.3.0
+cryptography>=41.0.0
+
+# Enterprise Features
+redis>=5.0.0
+celery>=5.3.0
+prometheus-client>=0.19.0
+structlog>=23.2.0
+
+# Development & Testing
+pytest>=7.4.3
+pytest-asyncio>=0.21.1
+pytest-cov>=4.1.0
+black>=23.11.0
+isort>=5.12.0
+
+# =============================================================================
+# INSTALLATION NOTES FOR LATEST FEATURES
+# =============================================================================
+#
+# UNIFIED SYSTEM SETUP:
+# =====================
+# 1. Install core dependencies:
+#    pip install -r requirements.txt
+#
+# 2. Initialize unified system:
+#    python unified_system_simple.py
+#
+# 3. Start unified web interface:
+#    python start_unified_web.py
+#
+# 4. Use unified CLI:
+#    python main.py --interactive
+#
+# PHASE 5 DATA PROCESSING:
+# =======================
+# 1. Install ML models:
+#    python -m spacy download en_core_web_sm
+#    python -m spacy download en_core_web_lg
+#
+# 2. Download GeoLite2 database:
+#    wget https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-City.mmdb
+#
+# 3. Test Phase 5 features:
+#    python examples/phase5_advanced_data_processing.py
+#
+# UNIFIED WEB INTERFACE:
+# =====================
+# 1. Start with automatic backend:
+#    python start_unified_web.py
+#
+# 2. Access dashboard:
+#    http://localhost:8000/app
+#
+# 3. Login credentials:
+#    Admin: admin/admin123
+#    User: user/user123
+#
+# UNIFIED CLI INTERFACE:
+# =====================
+# 1. Interactive mode:
+#    python main.py --interactive
+#
+# 2. Natural language commands:
+#    "Scrape products from amazon.com"
+#    "Show system status"
+#    "List all agents"
+#
+# 3. Classic commands:
+#    python main.py scrape --url https://example.com
+#    python main.py agents
+#    python main.py status

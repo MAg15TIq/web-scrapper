@@ -1,0 +1,29 @@
+{
+  "migration_completed": "2025-06-14T02:00:14.381195",
+  "migration_version": "2.0.0",
+  "steps_completed": [
+    {
+      "step": "backup_created",
+      "timestamp": "2025-06-14T02:00:13.683361",
+      "backup_path": "migration\\backups\\backup_20250614_020013",
+      "status": "success"
+    },
+    {
+      "step": "configuration_migrated",
+      "timestamp": "2025-06-14T02:00:13.713490",
+      "status": "success"
+    },
+    {
+      "step": "data_migrated",
+      "timestamp": "2025-06-14T02:00:13.844830",
+      "status": "success"
+    },
+    {
+      "step": "users_created",
+      "timestamp": "2025-06-14T02:00:14.381195",
+      "status": "success"
+    }
+  ],
+  "errors": [],
+  "status": "success"
+}

@@ -11,13 +11,13 @@ from typing import Dict, Any
 from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
 
 # Import route modules
-from web.api.routes import agents, jobs, monitoring, auth, websockets
+from web.api.routes import agents, jobs, monitoring, auth, websockets, streaming, security, workflows, plugins
 from web.api.middleware.auth import AuthMiddleware
 from web.api.middleware.rate_limiting import RateLimitMiddleware
 from web.api.dependencies import get_agent_manager, get_database
@@ -63,7 +63,16 @@ async def lifespan(app: FastAPI):
         app.state.agent_monitor = agent_monitor
         app.state.job_manager = job_manager
         app.state.config = config
-        
+
+        # Start real agent monitoring
+        try:
+            from web.api.services.agent_manager import agent_manager
+            await agent_manager.start_monitoring()
+            app.state.real_agent_manager = agent_manager
+            logger.info("Real agent monitoring started")
+        except Exception as e:
+            logger.error(f"Failed to start real agent monitoring: {e}")
+
         logger.info("Application startup completed")
         
     except Exception as e:
@@ -81,7 +90,15 @@ async def lifespan(app: FastAPI):
         
         if job_manager:
             await job_manager.stop()
-            
+
+        # Stop real agent monitoring
+        if hasattr(app.state, 'real_agent_manager'):
+            try:
+                await app.state.real_agent_manager.stop_monitoring()
+                logger.info("Real agent monitoring stopped")
+            except Exception as e:
+                logger.error(f"Error stopping real agent monitoring: {e}")
+
         logger.info("Application shutdown completed")
         
     except Exception as e:
@@ -177,7 +194,9 @@ async def root():
             "jobs": "/api/v1/jobs",
             "monitoring": "/api/v1/monitoring",
             "auth": "/api/v1/auth",
-            "websocket": "/ws"
+            "websocket": "/ws",
+            "streaming": "/api/v1/streaming",
+            "security": "/api/v1/security"
         }
     }
 
@@ -215,16 +234,81 @@ app.include_router(
     tags=["websockets"]
 )
 
+app.include_router(
+    streaming.router,
+    prefix="/api/v1/streaming",
+    tags=["streaming"]
+)
 
-# Static files and templates (for serving frontend if needed)
-if os.path.exists("web/frontend/dist"):
-    app.mount("/static", StaticFiles(directory="web/frontend/dist/static"), name="static")
-    
-    # Serve frontend
-    @app.get("/app/{path:path}")
-    async def serve_frontend(path: str):
-        """Serve frontend application."""
-        return StaticFiles(directory="web/frontend/dist").get_response(path)
+app.include_router(
+    security.router,
+    prefix="/api/v1",
+    tags=["security"]
+)
+
+app.include_router(
+    workflows.router,
+    prefix="/api/v1/workflows",
+    tags=["workflows"],
+    dependencies=[Depends(get_agent_manager)]
+)
+
+app.include_router(
+    plugins.router,
+    prefix="/api/v1/plugins",
+    tags=["plugins"],
+    dependencies=[Depends(get_agent_manager)]
+)
+
+
+# Static files and templates
+app.mount("/static", StaticFiles(directory="web/frontend/static"), name="static")
+
+# Templates
+templates = Jinja2Templates(directory="web/frontend/templates")
+
+# Authentication routes
+@app.get("/login", response_class=HTMLResponse)
+async def login_page(request: Request):
+    """Serve login page."""
+    return templates.TemplateResponse("login.html", {"request": request})
+
+# Serve frontend pages
+@app.get("/app", response_class=HTMLResponse)
+@app.get("/app/", response_class=HTMLResponse)
+async def dashboard_home(request: Request):
+    """Serve main dashboard page."""
+    return templates.TemplateResponse("dashboard.html", {"request": request})
+
+@app.get("/app/jobs", response_class=HTMLResponse)
+async def jobs_page(request: Request):
+    """Serve jobs management page."""
+    return templates.TemplateResponse("jobs.html", {"request": request})
+
+@app.get("/app/agents", response_class=HTMLResponse)
+async def agents_page(request: Request):
+    """Serve agents management page."""
+    return templates.TemplateResponse("agents.html", {"request": request})
+
+@app.get("/app/monitoring", response_class=HTMLResponse)
+async def monitoring_page(request: Request):
+    """Serve monitoring page."""
+    return templates.TemplateResponse("monitoring.html", {"request": request})
+
+@app.get("/app/data", response_class=HTMLResponse)
+async def data_page(request: Request):
+    """Serve data management page."""
+    return templates.TemplateResponse("data.html", {"request": request})
+
+@app.get("/app/security", response_class=HTMLResponse)
+async def security_page(request: Request):
+    """Serve security & compliance page."""
+    return templates.TemplateResponse("security.html", {"request": request})
+
+@app.get("/app/workflow-builder", response_class=HTMLResponse)
+async def workflow_builder_page(request: Request):
+    """Serve visual workflow builder page."""
+    return templates.TemplateResponse("workflow-builder.html", {"request": request})
 
 
 # WebSocket endpoint for real-time updates

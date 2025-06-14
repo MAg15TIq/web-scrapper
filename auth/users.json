@@ -1,0 +1,30 @@
+{
+  "06a63e75-f0d8-4031-9a81-29afaa204e11": {
+    "id": "06a63e75-f0d8-4031-9a81-29afaa204e11",
+    "username": "admin",
+    "email": "admin@webscraper.local",
+    "password_hash": "$2b$12$b30PN5k7fQzLPGwXDHgA2.EEnSxVqE5aBUyOcJWQC5Rx58SGa8UU.",
+    "role": "admin",
+    "is_active": true,
+    "is_admin": true,
+    "created_at": "2025-06-14 02:00:13.845539",
+    "last_login": "2025-06-14 02:05:05.000060",
+    "api_keys": [],
+    "permissions": [
+      "*"
+    ]
+  },
+  "24eabf9a-01dd-4b20-b65b-7d4f2e57d2d5": {
+    "id": "24eabf9a-01dd-4b20-b65b-7d4f2e57d2d5",
+    "username": "demo",
+    "email": "demo@webscraper.local",
+    "password_hash": "$2b$12$ksTyn0YAhavXceiZ8vAwnO7PDIbyfwpitawtH7UOL//YA2DnDSeia",
+    "role": "user",
+    "is_active": true,
+    "is_admin": false,
+    "created_at": "2025-06-14 02:00:14.109956",
+    "last_login": "2025-06-14 02:05:04.564907",
+    "api_keys": [],
+    "permissions": []
+  }
+}

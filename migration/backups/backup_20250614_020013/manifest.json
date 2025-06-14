@@ -1,0 +1,15 @@
+{
+  "backup_created": "2025-06-14T02:00:13.677522",
+  "files_backed_up": [
+    "config/web_config.py",
+    "config/langchain_config.py",
+    "cli/config_manager.py",
+    "config/settings.py"
+  ],
+  "directories_backed_up": [
+    "output",
+    "logs",
+    "data"
+  ],
+  "migration_version": "2.0.0"
+}
