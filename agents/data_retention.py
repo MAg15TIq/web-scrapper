@@ -72,7 +72,7 @@ class DataRetentionManager:
         self.secure_deletion_passes = 3
         
         # Start background tasks
-        self._start_background_tasks()
+        # self._start_background_tasks()
         
     def _initialize_database(self):
         """Initialize retention management database."""
@@ -524,3 +524,8 @@ class DataRetentionManager:
             except Exception as e:
                 self.logger.error(f"Error in periodic cleanup: {e}")
                 await asyncio.sleep(60)  # Wait before retrying
+
+# Singleton instance for global use
+encryption_manager = AdvancedEncryptionManager()
+audit_logger = TamperProofAuditLogger(encryption_manager)
+retention_manager = DataRetentionManager(encryption_manager, audit_logger)

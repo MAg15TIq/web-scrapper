@@ -51,6 +51,9 @@ class ActionType(str, Enum):
     ANALYZE = "analyze"
     VALIDATE = "validate"
     VISUALIZE = "visualize"
+    CONFIGURE = "configure"
+    EXPORT = "export"
+    SCHEDULE = "schedule"
 
 
 class OutputFormat(str, Enum):

@@ -7,9 +7,10 @@ import logging
 from typing import Dict, Any, Optional, List, TypedDict, Annotated
 from datetime import datetime
 from enum import Enum
+import inspect
 
 from langgraph.graph import StateGraph, END
-from langgraph.prebuilt import ToolExecutor
+from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import BaseMessage, HumanMessage, AIMessage
 from pydantic import BaseModel
 
@@ -92,12 +93,19 @@ class WorkflowOrchestrator:
         self.visualization_agent = VisualizationAgent()
         self.error_recovery_agent = ErrorRecoveryAgent()
 
-        # Create the enhanced workflow graph
+        # Create the enhanced workflow graph (no ToolExecutor, use create_react_agent if needed)
         self.workflow_graph = self._create_enhanced_workflow_graph()
+        # Example: If you need a ReAct agent for tool execution, you can initialize it like this:
+        # from langchain_openai import ChatOpenAI
+        # from langchain_core.tools import tool
+        # model = ChatOpenAI(model="gpt-4o")
+        # tools = [your_tool_list]
+        # self.react_agent_executor = create_react_agent(model, tools)
+        self.react_agent_executor = None  # Placeholder, set up in your actual implementation
 
         self.logger.info("Enhanced Workflow Orchestrator initialized with all specialized agents")
 
-    def _create_enhanced_workflow_graph(self) -> StateGraph:
+    def _create_enhanced_workflow_graph(self):
         """Create the enhanced LangGraph workflow with parallel execution and advanced features."""
         # Define the enhanced workflow graph
         workflow = StateGraph(WorkflowGraphState)
@@ -207,7 +215,7 @@ class WorkflowOrchestrator:
 
         return workflow.compile()
 
-    def _create_workflow_graph(self) -> StateGraph:
+    def _create_workflow_graph(self):
         """Create the LangGraph workflow."""
         # Define the workflow graph
         workflow = StateGraph(WorkflowGraphState)
@@ -411,7 +419,7 @@ class WorkflowOrchestrator:
         return state
 
     async def _parallel_execution_node(self, state: WorkflowGraphState) -> WorkflowGraphState:
-        """Execute scraping tasks in parallel across multiple sites."""
+        """Execute scraping tasks in parallel across multiple sites using a ReAct agent."""
         self.logger.info(f"Executing parallel scraping for workflow {state['workflow_id']}")
 
         try:
@@ -420,6 +428,7 @@ class WorkflowOrchestrator:
 
             # Start parallel tasks for each strategy
             parallel_tasks = {}
+            extracted_data = {}
             for i, strategy in enumerate(state["execution_plan"].strategies):
                 task_id = f"scrape_task_{i}"
                 parallel_tasks[task_id] = {
@@ -428,15 +437,20 @@ class WorkflowOrchestrator:
                     "started_at": datetime.now(),
                     "site_url": strategy.site_url
                 }
-
-            # Simulate parallel execution (in real implementation, this would
-            # coordinate with actual scraping agents)
-            extracted_data = {}
-            for task_id, task_info in parallel_tasks.items():
                 try:
-                    # Simulate scraping for each site
-                    site_data = await self._simulate_site_scraping(task_info["strategy"])
-                    extracted_data[task_info["site_url"]] = site_data
+                    # Use ReAct agent for scraping if available
+                    if self.react_agent_executor is not None:
+                        # Example input for the agent: you may need to adapt this
+                        agent_input = {"messages": [("human", f"Scrape site: {strategy.site_url}")]}
+                        ainvoke = getattr(self.react_agent_executor, "ainvoke", None)
+                        if inspect.iscoroutinefunction(ainvoke):
+                            site_data = await ainvoke(agent_input)
+                        else:
+                            raise RuntimeError("react_agent_executor.ainvoke is not an async function or not set up correctly.")
+                    else:
+                        # Fallback to simulation if no agent executor is set
+                        site_data = await self._simulate_site_scraping(strategy.dict())
+                    extracted_data[strategy.site_url] = site_data
                     parallel_tasks[task_id]["status"] = "completed"
                     parallel_tasks[task_id]["completed_at"] = datetime.now()
                 except Exception as e:
@@ -653,8 +667,8 @@ class WorkflowOrchestrator:
 
             # Update state
             state["extracted_data"] = extracted_data
-            state["current_step"] = WorkflowStep.EXECUTION
-            state["completed_steps"].append(WorkflowStep.EXECUTION)
+            state["current_step"] = WorkflowStep("execution")
+            state["completed_steps"].append(WorkflowStep("execution"))
             state["updated_at"] = datetime.now()
 
             self.logger.info(f"Execution completed for workflow {state['workflow_id']}")

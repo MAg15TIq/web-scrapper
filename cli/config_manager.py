@@ -224,8 +224,10 @@ class ConfigManager:
         """Get a specific profile or the current profile."""
         if not self.config:
             return None
-        
-        profile_name = profile_name or self.current_profile
+        # Ensure profile_name is always a string
+        profile_name = profile_name if profile_name is not None else self.current_profile or "default"
+        if profile_name is None:
+            return None
         return self.config.profiles.get(profile_name)
     
     def set_profile(self, profile_name: str) -> bool:
@@ -309,21 +311,38 @@ class ConfigManager:
                     description='Default CLI profile',
                     default_output_format='json',
                     default_agents=['Scraper Agent', 'Parser Agent', 'Storage Agent'],
-                    theme='default'
+                    auto_confirm=False,
+                    verbose_logging=False,
+                    theme='default',
+                    max_concurrent_tasks=5,
+                    timeout=300,
+                    retry_attempts=3
                 ).dict()
             },
             'agents': {
                 'scraper': AgentConfiguration(
                     agent_type='scraper',
-                    config={'timeout': 30, 'retries': 3}
+                    enabled=True,
+                    config={'timeout': 30, 'retries': 3},
+                    priority=1,
+                    timeout=300,
+                    retry_policy={}
                 ).dict(),
                 'parser': AgentConfiguration(
                     agent_type='parser',
-                    config={'normalize_data': True}
+                    enabled=True,
+                    config={'normalize_data': True},
+                    priority=1,
+                    timeout=300,
+                    retry_policy={}
                 ).dict(),
                 'storage': AgentConfiguration(
                     agent_type='storage',
-                    config={'default_format': 'json'}
+                    enabled=True,
+                    config={'default_format': 'json'},
+                    priority=1,
+                    timeout=300,
+                    retry_policy={}
                 ).dict()
             },
             'logging': {
@@ -356,4 +375,4 @@ class ConfigManager:
                     result[key] = value
             return result
         
-        return deep_merge(defaults, config_data)
+        return deep_merge(defaults, config_data) 

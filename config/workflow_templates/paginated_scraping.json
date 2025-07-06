@@ -1,0 +1,42 @@
+{
+  "name": "Paginated Scraping Workflow",
+  "description": "Scrape data from multiple pages using a next-page selector or URL pattern.",
+  "parameters": {
+    "url": "",
+    "selectors": {},
+    "output_path": "output/paginated_output.json",
+    "pagination_selector": ".next-page",
+    "max_pages": 5
+  },
+  "steps": [
+    {
+      "name": "fetch_page",
+      "type": "fetch",
+      "params": {
+        "url": "${url}"
+      }
+    },
+    {
+      "name": "extract_data",
+      "type": "parse",
+      "params": {
+        "selectors": "${selectors}"
+      }
+    },
+    {
+      "name": "save_data",
+      "type": "save",
+      "params": {
+        "output_path": "${output_path}"
+      }
+    },
+    {
+      "name": "paginate",
+      "type": "paginate",
+      "params": {
+        "pagination_selector": "${pagination_selector}",
+        "max_pages": "${max_pages}"
+      }
+    }
+  ]
+} 

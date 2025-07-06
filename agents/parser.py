@@ -194,15 +194,19 @@ class ParserAgent(Agent):
         for element in elements:
             # Get the attribute value
             link = element.get(attribute)
-            
+
+            # Handle cases where link is a list (e.g., class attribute)
+            if isinstance(link, list):
+                link = " ".join(link)
+
             if link:
                 # Join with base URL if provided
-                if base_url and not link.startswith(("http://", "https://")):
+                if base_url and isinstance(link, str) and not link.startswith(("http://", "https://")):
                     link = urljoin(base_url, link)
                 
                 # Apply filter if provided
                 if filter_pattern:
-                    if re.search(filter_pattern, link):
+                    if isinstance(link, str) and re.search(filter_pattern, link):
                         links.append(link)
                 else:
                     links.append(link)

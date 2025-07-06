@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 
 from agents.base import Agent
-from models.message import Message, StatusMessage, AlertMessage, MetricMessage
+from models.message import Message, StatusMessage
 
 
 class MonitoringAgent(Agent):
@@ -275,44 +275,43 @@ class MonitoringAgent(Agent):
         cutoff_time = time.time() - (7 * 24 * 3600)
         self.alert_history = [a for a in self.alert_history if a["timestamp"] > cutoff_time]
     
-    async def _handle_status_message(self, message: StatusMessage) -> None:
+    async def _handle_status_message(self, message: Message) -> None:
         """
         Handle a status message from an agent.
         
         Args:
             message: The status message to handle.
         """
-        self.logger.debug(f"Received status update from {message.sender_id}: {message.status}")
-        
+        # Defensive: check if message has 'status' attribute
+        status = getattr(message, 'status', None)
+        self.logger.debug(f"Received status update from {message.sender_id}: {status}")
         # Check for unhealthy status
-        if message.status == "error" or message.status == "failed":
+        if status in ("error", "failed"):
             await self._create_alert(
                 f"Agent {message.sender_id} Status",
-                f"Agent reported {message.status} status",
+                f"Agent reported {status} status",
                 "error"
             )
     
-    async def _handle_metric_message(self, message: MetricMessage) -> None:
+    async def _handle_metric_message(self, message: Message) -> None:
         """
         Handle a metric message from an agent.
-        
         Args:
             message: The metric message to handle.
         """
-        self.logger.debug(f"Received metric from {message.sender_id}: {message.metric_type}")
-        
-        # Store metric
+        metric_type = message.payload.get('metric_type')
+        value = message.payload.get('value')
+        tags = message.payload.get('tags', {})
+        self.logger.debug(f"Received metric from {message.sender_id}: {metric_type}")
         metric_data = {
             "timestamp": time.time(),
-            "value": message.value,
-            "tags": message.tags
+            "value": value,
+            "tags": tags
         }
-        
-        self.metrics[message.metric_type].append(metric_data)
-        
-        # Trim metrics history if needed
-        if len(self.metrics[message.metric_type]) > self.max_metrics_history:
-            self.metrics[message.metric_type] = self.metrics[message.metric_type][-self.max_metrics_history:]
+        if metric_type:
+            self.metrics[metric_type].append(metric_data)
+            if len(self.metrics[metric_type]) > self.max_metrics_history:
+                self.metrics[metric_type] = self.metrics[metric_type][-self.max_metrics_history:]
     
     def get_alert_history(self, level: Optional[str] = None, limit: int = 100) -> List[Dict[str, Any]]:
         """
@@ -356,3 +355,7 @@ class MonitoringAgent(Agent):
             metrics = [m for m in metrics if m["timestamp"] <= end_time]
         
         return sorted(metrics, key=lambda x: x["timestamp"])
+
+    async def execute_task(self, task):
+        """MonitoringAgent does not execute tasks directly."""
+        raise NotImplementedError("MonitoringAgent does not execute tasks directly.")

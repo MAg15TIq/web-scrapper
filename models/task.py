@@ -221,7 +221,7 @@ class FetchUrlTask(Task):
     type: TaskType = TaskType.FETCH_URL
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "url": "https://example.com",
@@ -243,7 +243,7 @@ class ParseContentTask(Task):
     type: TaskType = TaskType.PARSE_CONTENT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "content": "<!DOCTYPE html><html>...</html>",
@@ -266,7 +266,7 @@ class StoreDataTask(Task):
     type: TaskType = TaskType.STORE_DATA
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "data": [{"title": "Example", "price": "$10.99"}],
@@ -289,7 +289,7 @@ class RenderJsTask(Task):
     type: TaskType = TaskType.RENDER_JS
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "url": "https://example.com",
@@ -310,7 +310,7 @@ class ExtractLinksTask(Task):
     type: TaskType = TaskType.EXTRACT_LINKS
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "content": "<!DOCTYPE html><html>...</html>",
@@ -331,7 +331,7 @@ class FollowPaginationTask(Task):
     type: TaskType = TaskType.FOLLOW_PAGINATION
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "url": "https://example.com/products",
@@ -355,7 +355,7 @@ class RenderPageTask(Task):
     type: TaskType = TaskType.RENDER_PAGE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "url": "https://example.com",
@@ -379,7 +379,7 @@ class InteractWithPageTask(Task):
     type: TaskType = TaskType.INTERACT_WITH_PAGE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "page_id": "page-123",  # ID of a previously rendered page
@@ -402,7 +402,7 @@ class ScrollPageTask(Task):
     type: TaskType = TaskType.SCROLL_PAGE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "page_id": "page-123",  # ID of a previously rendered page
@@ -424,7 +424,7 @@ class TakeScreenshotTask(Task):
     type: TaskType = TaskType.TAKE_SCREENSHOT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "page_id": "page-123",  # ID of a previously rendered page
@@ -445,7 +445,7 @@ class ExecuteScriptTask(Task):
     type: TaskType = TaskType.EXECUTE_SCRIPT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "page_id": "page-123",  # ID of a previously rendered page
@@ -466,7 +466,7 @@ class AuthenticateTask(Task):
     type: TaskType = TaskType.AUTHENTICATE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "url": "https://example.com/login",
@@ -495,7 +495,7 @@ class RefreshSessionTask(Task):
     type: TaskType = TaskType.REFRESH_SESSION
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -515,7 +515,7 @@ class SolveCaptchaTask(Task):
     type: TaskType = TaskType.SOLVE_CAPTCHA
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "page_id": "page-123",  # ID of a previously rendered page
@@ -537,7 +537,7 @@ class GenerateFingerprintTask(Task):
     type: TaskType = TaskType.GENERATE_FINGERPRINT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "target_site": "example.com",
@@ -560,7 +560,7 @@ class CheckBlockingTask(Task):
     type: TaskType = TaskType.CHECK_BLOCKING
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "url": "https://example.com",
@@ -584,7 +584,7 @@ class OptimizeRequestPatternTask(Task):
     type: TaskType = TaskType.OPTIMIZE_REQUEST_PATTERN
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -607,7 +607,7 @@ class CleanDataTask(Task):
     type: TaskType = TaskType.CLEAN_DATA
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "data": [{"title": " Example Title ", "price": "$10.99"}],
@@ -629,7 +629,7 @@ class TransformSchemaTask(Task):
     type: TaskType = TaskType.TRANSFORM_SCHEMA
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "data": [{"title": "Example", "price": 10.99}],
@@ -657,7 +657,7 @@ class EnrichDataTask(Task):
     type: TaskType = TaskType.ENRICH_DATA
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "data": [{"product_id": "123", "name": "Example Product"}],
@@ -686,7 +686,7 @@ class AnalyzeTextTask(Task):
     type: TaskType = TaskType.ANALYZE_TEXT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "text": "This is a sample product description. It's very good quality.",
@@ -708,7 +708,7 @@ class MonitorSystemHealthTask(Task):
     type: TaskType = TaskType.MONITOR_SYSTEM_HEALTH
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "components": ["scraper", "parser", "storage", "api_integration"],
@@ -732,7 +732,7 @@ class TrackPerformanceTask(Task):
     type: TaskType = TaskType.TRACK_PERFORMANCE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "agent_id": "scraper-1",
@@ -751,7 +751,7 @@ class GenerateAlertTask(Task):
     type: TaskType = TaskType.GENERATE_ALERT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "alert_type": "error",  # or "warning", "info"
@@ -776,7 +776,7 @@ class MonitorResourcesTask(Task):
     type: TaskType = TaskType.MONITOR_RESOURCES
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "resources": ["cpu", "memory", "disk", "network"],
@@ -796,7 +796,7 @@ class GenerateReportTask(Task):
     type: TaskType = TaskType.GENERATE_REPORT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "report_type": "performance",  # or "status", "error", "usage"
@@ -819,7 +819,7 @@ class ParseRobotsTxtTask(Task):
     type: TaskType = TaskType.PARSE_ROBOTS_TXT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -839,7 +839,7 @@ class CheckRateLimitsTask(Task):
     type: TaskType = TaskType.CHECK_RATE_LIMITS
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -860,7 +860,7 @@ class MonitorTosTask(Task):
     type: TaskType = TaskType.MONITOR_TOS
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -886,7 +886,7 @@ class CheckLegalComplianceTask(Task):
     type: TaskType = TaskType.CHECK_LEGAL_COMPLIANCE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -907,7 +907,7 @@ class EnforceEthicalScrapingTask(Task):
     type: TaskType = TaskType.ENFORCE_ETHICAL_SCRAPING
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -934,7 +934,7 @@ class ValidateDataTask(Task):
     type: TaskType = TaskType.VALIDATE_DATA
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "data": [{"title": "Example", "price": 10.99}],
@@ -957,7 +957,7 @@ class DetectDataAnomaliesTask(Task):
     type: TaskType = TaskType.DETECT_DATA_ANOMALIES
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "data": [{"title": "Example", "price": 10.99}],
@@ -978,7 +978,7 @@ class CheckCompletenessTask(Task):
     type: TaskType = TaskType.CHECK_COMPLETENESS
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "data": [{"title": "Example", "price": 10.99, "description": None}],
@@ -1002,7 +1002,7 @@ class VerifyConsistencyTask(Task):
     type: TaskType = TaskType.VERIFY_CONSISTENCY
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "data": [{"title": "Example", "price": 10.99, "sale_price": 8.99}],
@@ -1029,7 +1029,7 @@ class ScoreDataQualityTask(Task):
     type: TaskType = TaskType.SCORE_DATA_QUALITY
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "data": [{"title": "Example", "price": 10.99, "description": "A good product"}],
@@ -1056,7 +1056,7 @@ class AnalyzePatternsTask(Task):
     type: TaskType = TaskType.ANALYZE_PATTERNS
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -1082,7 +1082,7 @@ class OptimizeStrategyTask(Task):
     type: TaskType = TaskType.OPTIMIZE_STRATEGY
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -1107,7 +1107,7 @@ class TuneParametersTask(Task):
     type: TaskType = TaskType.TUNE_PARAMETERS
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -1131,7 +1131,7 @@ class DetectSiteChangesTask(Task):
     type: TaskType = TaskType.DETECT_SITE_CHANGES
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "url": "https://example.com/products",
@@ -1155,7 +1155,7 @@ class SuggestImprovementsTask(Task):
     type: TaskType = TaskType.SUGGEST_IMPROVEMENTS
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -1182,7 +1182,7 @@ class ApplySiteRulesTask(Task):
     type: TaskType = TaskType.APPLY_SITE_RULES
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -1202,7 +1202,7 @@ class NavigateSiteTask(Task):
     type: TaskType = TaskType.NAVIGATE_SITE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -1227,7 +1227,7 @@ class HandleSiteAuthTask(Task):
     type: TaskType = TaskType.HANDLE_SITE_AUTH
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -1257,7 +1257,7 @@ class ApplySiteAntiDetectionTask(Task):
     type: TaskType = TaskType.APPLY_SITE_ANTI_DETECTION
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -1290,7 +1290,7 @@ class OptimizeSiteScrapingTask(Task):
     type: TaskType = TaskType.OPTIMIZE_SITE_SCRAPING
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -1324,7 +1324,7 @@ class AnalyzeInputTask(Task):
     type: TaskType = TaskType.ANALYZE_INPUT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "input_data": "https://example.com/products/123",
@@ -1343,7 +1343,7 @@ class SelectAgentsTask(Task):
     type: TaskType = TaskType.SELECT_AGENTS
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "analysis_result": {
@@ -1370,7 +1370,7 @@ class AnalyzeUrlTask(Task):
     type: TaskType = TaskType.ANALYZE_URL
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "url": "https://example.com/products/123",
@@ -1389,7 +1389,7 @@ class DetectTechnologiesTask(Task):
     type: TaskType = TaskType.DETECT_TECHNOLOGIES
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "content": "<!DOCTYPE html><html><head><script src='react.js'></script></head><body></body></html>",
@@ -1406,7 +1406,7 @@ class CheckRobotsTxtTask(Task):
     type: TaskType = TaskType.CHECK_ROBOTS_TXT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "url": "https://example.com",
@@ -1423,7 +1423,7 @@ class RecognizeContentTask(Task):
     type: TaskType = TaskType.RECOGNIZE_CONTENT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "content": "<!DOCTYPE html><html><body><h1>Hello World</h1></body></html>",
@@ -1441,7 +1441,7 @@ class DetectContentTypeTask(Task):
     type: TaskType = TaskType.DETECT_CONTENT_TYPE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "content": "<!DOCTYPE html><html><body><h1>Hello World</h1></body></html>",
@@ -1458,7 +1458,7 @@ class AnalyzeStructureTask(Task):
     type: TaskType = TaskType.ANALYZE_STRUCTURE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "content": "<!DOCTYPE html><html><body><h1>Hello World</h1></body></html>",
@@ -1475,7 +1475,7 @@ class ProcessDocumentTask(Task):
     type: TaskType = TaskType.PROCESS_DOCUMENT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "document_data": "https://example.com/document.pdf",
@@ -1492,7 +1492,7 @@ class ExtractTextTask(Task):
     type: TaskType = TaskType.EXTRACT_TEXT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "document_data": "https://example.com/document.pdf",
@@ -1509,7 +1509,7 @@ class ExtractTablesTask(Task):
     type: TaskType = TaskType.EXTRACT_TABLES
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "document_data": "https://example.com/document.xlsx",
@@ -1526,7 +1526,7 @@ class ExtractMetadataTask(Task):
     type: TaskType = TaskType.EXTRACT_METADATA
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "document_data": "https://example.com/document.pdf",
@@ -1543,7 +1543,7 @@ class OptimizePerformanceTask(Task):
     type: TaskType = TaskType.OPTIMIZE_PERFORMANCE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "target_components": ["scraper", "parser", "storage"],
@@ -1564,7 +1564,7 @@ class QualityAssuranceTask(Task):
     type: TaskType = TaskType.QUALITY_ASSURANCE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "data": [{"title": "Product 1", "price": 10.99}],
@@ -1592,7 +1592,7 @@ class AdaptiveScheduleTask(Task):
     type: TaskType = TaskType.ADAPTIVE_SCHEDULE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -1620,7 +1620,7 @@ class RecoverFromFailureTask(Task):
     type: TaskType = TaskType.RECOVER_FROM_FAILURE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "failed_task_id": "task-123",
@@ -1642,7 +1642,7 @@ class AnalyzeAgentPerformanceTask(Task):
     type: TaskType = TaskType.ANALYZE_AGENT_PERFORMANCE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "agent_types": ["scraper", "parser", "storage"],
@@ -1663,7 +1663,7 @@ class BalanceLoadTask(Task):
     type: TaskType = TaskType.BALANCE_LOAD
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "agent_types": ["scraper", "parser", "storage"],
@@ -1683,7 +1683,7 @@ class CreateWorkflowTemplateTask(Task):
     type: TaskType = TaskType.CREATE_WORKFLOW_TEMPLATE
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "template_name": "product_catalog_scraper",
@@ -1724,7 +1724,7 @@ class SmartRateLimitTask(Task):
     type: TaskType = TaskType.SMART_RATE_LIMIT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -1750,7 +1750,7 @@ class DiffContentTask(Task):
     type: TaskType = TaskType.DIFF_CONTENT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "url": "https://example.com/products",
@@ -1771,7 +1771,7 @@ class ProgressiveRenderTask(Task):
     type: TaskType = TaskType.PROGRESSIVE_RENDER
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "url": "https://example.com/products",
@@ -1792,7 +1792,7 @@ class ManageProxiesTask(Task):
     type: TaskType = TaskType.MANAGE_PROXIES
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "domain": "example.com",
@@ -1814,7 +1814,7 @@ class StreamExtractTask(Task):
     type: TaskType = TaskType.STREAM_EXTRACT
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "url": "https://example.com/products",
@@ -1839,7 +1839,7 @@ class VersionDataTask(Task):
     type: TaskType = TaskType.VERSION_DATA
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "data": [{"id": "123", "title": "Example", "price": 10.99}],
@@ -1863,7 +1863,7 @@ class ValidateSchemaTask(Task):
     type: TaskType = TaskType.VALIDATE_SCHEMA
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "data": [{"id": "123", "title": "Example", "price": 10.99}],
@@ -1890,7 +1890,7 @@ class UpdateIncrementallyTask(Task):
     type: TaskType = TaskType.UPDATE_INCREMENTALLY
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "dataset_id": "products",
@@ -1912,7 +1912,7 @@ class CompressDataTask(Task):
     type: TaskType = TaskType.COMPRESS_DATA
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "dataset_id": "products",
@@ -1935,7 +1935,7 @@ class OptimizeQueryTask(Task):
     type: TaskType = TaskType.OPTIMIZE_QUERY
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "parameters": {
                     "dataset_id": "products",

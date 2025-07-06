@@ -36,8 +36,7 @@ cli:
       description: Default unified profile
       name: default
       theme: modern
-config_source: !!python/object/apply:config.unified_config.ConfigSource
-- default
+config_source: default
 database:
   echo: false
   max_overflow: 10
@@ -124,7 +123,7 @@ web:
   debug: false
   description: Advanced web scraping with AI agents
   docs_url: /docs
-  enable_auth: true
+  enable_auth: false
   enable_file_uploads: true
   enable_monitoring: true
   enable_rate_limiting: true

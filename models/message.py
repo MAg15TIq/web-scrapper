@@ -60,7 +60,7 @@ class TaskMessage(Message):
     dependencies: List[str] = []
     
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "sender_id": "coordinator",
                 "recipient_id": "scraper-1",
@@ -84,7 +84,7 @@ class ResultMessage(Message):
     execution_time: float = 0.0
     
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "sender_id": "scraper-1",
                 "recipient_id": "coordinator",
@@ -110,7 +110,7 @@ class ErrorMessage(Message):
     traceback: Optional[str] = None
     
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "sender_id": "scraper-1",
                 "recipient_id": "coordinator",
@@ -131,7 +131,7 @@ class ControlMessage(Message):
     arguments: Dict[str, Any] = {}
     
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "sender_id": "coordinator",
                 "recipient_id": "scraper-1",
@@ -150,7 +150,7 @@ class StatusMessage(Message):
     details: Dict[str, Any] = {}
     
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "sender_id": "scraper-1",
                 "recipient_id": "coordinator",

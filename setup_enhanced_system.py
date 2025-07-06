@@ -23,7 +23,7 @@ class EnhancedSystemSetup:
     def print_banner(self):
         """Print setup banner."""
         print("=" * 70)
-        print("🚀 LangChain & Pydantic AI Enhanced Web Scraping System Setup")
+        print("[SETUP] LangChain & Pydantic AI Enhanced Web Scraping System Setup")
         print("=" * 70)
         print("This setup will install and configure:")
         print("• LangChain for AI-powered agent reasoning")
@@ -35,33 +35,33 @@ class EnhancedSystemSetup:
     
     def check_python_version(self) -> bool:
         """Check if Python version is compatible."""
-        print("\n🐍 Checking Python version...")
+        print("\n[PYTHON] Checking Python version...")
         
         version = sys.version_info
         if version.major < 3 or (version.major == 3 and version.minor < 9):
-            print(f"❌ Python {version.major}.{version.minor} is not supported.")
+            print(f"[ERROR] Python {version.major}.{version.minor} is not supported.")
             print("   Please install Python 3.9 or higher.")
             return False
         
-        print(f"✅ Python {version.major}.{version.minor}.{version.micro} is compatible.")
+        print(f"[OK] Python {version.major}.{version.minor}.{version.micro} is compatible.")
         return True
     
     def create_virtual_environment(self) -> bool:
         """Create a virtual environment."""
-        print("\n🔧 Setting up virtual environment...")
+        print("\n[ENV] Setting up virtual environment...")
         
         if self.venv_path.exists():
-            print("✅ Virtual environment already exists.")
+            print("[OK] Virtual environment already exists.")
             return True
         
         try:
             subprocess.run([
                 sys.executable, "-m", "venv", str(self.venv_path)
             ], check=True)
-            print("✅ Virtual environment created successfully.")
+            print("[OK] Virtual environment created successfully.")
             return True
         except subprocess.CalledProcessError as e:
-            print(f"❌ Failed to create virtual environment: {e}")
+            print(f"[ERROR] Failed to create virtual environment: {e}")
             return False
     
     def get_pip_command(self) -> str:
@@ -73,10 +73,10 @@ class EnhancedSystemSetup:
     
     def install_dependencies(self) -> bool:
         """Install required dependencies."""
-        print("\n📦 Installing dependencies...")
+        print("\n[DEPENDENCIES] Installing dependencies...")
         
         if not self.requirements_file.exists():
-            print(f"❌ Requirements file not found: {self.requirements_file}")
+            print(f"[ERROR] Requirements file not found: {self.requirements_file}")
             return False
         
         pip_cmd = self.get_pip_command()
@@ -92,10 +92,10 @@ class EnhancedSystemSetup:
                 pip_cmd, "install", "-r", str(self.requirements_file)
             ], check=True)
             
-            print("✅ Dependencies installed successfully.")
+            print("[OK] Dependencies installed successfully.")
             return True
         except subprocess.CalledProcessError as e:
-            print(f"❌ Failed to install dependencies: {e}")
+            print(f"[ERROR] Failed to install dependencies: {e}")
             return False
     
     def create_env_file(self) -> bool:
@@ -228,7 +228,7 @@ INTELLIGENT_RETRY=true
     def print_next_steps(self):
         """Print next steps for the user."""
         print("\n" + "=" * 70)
-        print("🎯 SETUP COMPLETED! Next Steps:")
+        print("[NEXT] SETUP COMPLETED! Next Steps:")
         print("=" * 70)
         
         steps = [
@@ -261,7 +261,7 @@ INTELLIGENT_RETRY=true
             print(step)
         
         print("\n" + "=" * 70)
-        print("📚 Documentation and Examples:")
+        print("[DOCS] Documentation and Examples:")
         print("   • README.md - System overview and basic usage")
         print("   • examples/ - Example scripts and use cases")
         print("   • docs/ - Detailed documentation")
@@ -287,7 +287,7 @@ INTELLIGENT_RETRY=true
         
         for step_name, step_func in steps:
             if not step_func():
-                print(f"\n❌ Setup failed at: {step_name}")
+                print(f"\n[ERROR] Setup failed at: {step_name}")
                 return False
         
         self.print_next_steps()
@@ -301,16 +301,16 @@ def main():
     try:
         success = setup.run_setup()
         if success:
-            print("\n🎉 Setup completed successfully!")
+            print("\n[OK] Setup completed successfully!")
             sys.exit(0)
         else:
-            print("\n💥 Setup failed. Please check the errors above.")
+            print("\n[ERROR] Setup failed. Please check the errors above.")
             sys.exit(1)
     except KeyboardInterrupt:
-        print("\n\n⚠️  Setup interrupted by user.")
+        print("\n\n[STOP] Setup interrupted by user.")
         sys.exit(1)
     except Exception as e:
-        print(f"\n💥 Unexpected error during setup: {e}")
+        print(f"\n[ERROR] Unexpected error during setup: {e}")
         sys.exit(1)
 
 
